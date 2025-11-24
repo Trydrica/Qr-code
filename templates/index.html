@@ -17,6 +17,10 @@
         <p class="error">{{ error }}</p>
     {% endif %}
 
+    {% if message %}
+        <p class="success">{{ message }}</p>
+    {% endif %}
+
     <!-- Formulaire -->
     <form action="/generate" method="POST">
 
@@ -59,6 +63,10 @@
             </div>
         {% endfor %}
     </div>
+
+<form action="/purge" method="POST" onsubmit="return confirm('Supprimer tout l’historique et tous les fichiers QR ?')">
+    <button type="submit" class="purge-btn">Purger l’historique</button>
+</form>
 
 </div>
 

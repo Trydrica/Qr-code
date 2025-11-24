@@ -148,7 +148,31 @@ def download(filename):
     logging.info(f"Téléchargement du fichier : {filename}")
     return send_from_directory(OUTPUT_FOLDER, filename, as_attachment=True)
 
+@app.route("/purge", methods=["POST"])
+def purge_history():
+    logging.warning("Purge de l'historique et suppression des fichiers QR demandée.")
 
+    # 1. Vider le cache en mémoire
+    history_cache.clear()
+
+    # 2. Sauvegarder un fichier JSON vide
+    with open(HISTORY_FILE, "w") as f:
+        json.dump([], f)
+
+    # 3. Supprimer les fichiers du dossier static/qrcodes
+    removed_files = 0
+    for file in os.listdir(OUTPUT_FOLDER):
+        path = os.path.join(OUTPUT_FOLDER, file)
+        try:
+            os.remove(path)
+            removed_files += 1
+        except Exception as e:
+            logging.error(f"Erreur suppression {file} : {e}")
+
+    logging.info(f"Purge terminée. Fichiers supprimés : {removed_files}")
+
+    return render_template("index.html", history=history_cache, message="Historique purgé avec succès !")
+    
 if __name__ == "__main__":
     logging.info("Serveur Flask lancé en mode debug.")
     app.run(debug=True)
