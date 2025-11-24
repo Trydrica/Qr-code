@@ -7,36 +7,60 @@
 </head>
 
 <body>
-    <div class="container">
 
-        <h2>Générer un QR Code</h2>
+<div class="container">
 
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
+    <h2>Générer un QR Code</h2>
 
-        <form action="/generate" method="POST">
+    <!-- Message d'erreur si besoin -->
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
 
-            <label>Lien à convertir :</label><br>
-            <input type="text" name="link" placeholder="https://exemple.com" required>
+    <!-- Formulaire -->
+    <form action="/generate" method="POST">
 
-            <label>Nom du fichier :</label><br>
-            <input type="text" name="filename" placeholder="qrcode" required>
+        <label>Lien à convertir :</label><br>
+        <input type="text" name="link" placeholder="https://exemple.com" required>
 
-            <button type="submit">Générer</button>
-        </form>
+        <label>Nom du fichier :</label><br>
+        <input type="text" name="filename" placeholder="qrcode" required>
 
-        {% if qr_path %}
-        <div class="qr-box">
-            <br><br><h2>QR Code généré :</h2>
-            <img src="{{ qr_path }}" alt="QR Code">
-            <p class="filename-display">{{ filename }}</p>
+        <button type="submit">Générer</button>
+    </form>
 
-            <a href="/download/{{ filename }}">
-                <br><br><button class="download-btn">Télécharger</button>
-            </a>
-        </div>
-        {% endif %}
+    <!-- Affichage du QR généré -->
+    {% if qr_path %}
+    <div class="qr-box">
+        <h3>QR Code généré :</h3>
+
+        <img src="{{ qr_path }}" alt="QR Code" class="qr-img">
+
+        <p class="filename-display">{{ filename }}</p>
+
+        <a href="/download/{{ filename }}">
+            <button class="download-btn">Télécharger</button>
+        </a>
     </div>
+    {% endif %}
+
+    <hr>
+
+    <!-- Historique -->
+    <h3>Historique des QR Codes</h3>
+
+    <div class="history">
+        {% for qr in history %}
+            <div class="history-item">
+                <img src="{{ qr.path }}" class="thumbnail" alt="QR code miniature">
+                <p>{{ qr.filename }}</p>
+                <a href="{{ qr.path }}" download>Télécharger</a><br>
+                <small>Créé le : {{ qr.timestamp | datetime }}</small>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
 </body>
 </html>
