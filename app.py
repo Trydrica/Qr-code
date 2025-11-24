@@ -29,8 +29,8 @@ def generate():
 
     # QR code stylisé
     qr = qrcode.QRCode(
-        version=1,
-        box_size=12,
+        version=3,
+        box_size=100,
         border=4,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
     )
