@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, send_from_directory
-import qrcode
 import os
+import qrcode
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 
 app = Flask(__name__)
 
+# Dossier où seront enregistrés les QR codes
 OUTPUT_FOLDER = "static/qrcodes"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
@@ -24,15 +27,29 @@ def generate():
 
     filepath = os.path.join(OUTPUT_FOLDER, filename)
 
-    # Génération du QR code
-    img = qrcode.make(link)
+    # QR code stylisé
+    qr = qrcode.QRCode(
+        version=1,
+        box_size=12,
+        border=4,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+    )
+    
+    qr.add_data(link)
+    qr.make(fit=True)
+
+    img = qr.make_image(
+        image_factory=StyledPilImage,
+        module_drawer=RoundedModuleDrawer()
+    )
+
     img.save(filepath)
 
     return render_template(
         "index.html",
         link=link,
         filename=filename,
-        qr_path=f"/static/qrcodes/{filename}"
+        qr_path=f"/static/qrcodes/{filename}",
     )
 
 @app.route("/download/<filename>")

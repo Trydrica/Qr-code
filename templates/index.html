@@ -28,11 +28,12 @@
 
         {% if qr_path %}
         <div class="qr-box">
-            <h3>QR Code généré :</h3>
+            <br><br><h2>QR Code généré :</h2>
             <img src="{{ qr_path }}" alt="QR Code">
+            <p class="filename-display">{{ filename }}</p>
 
             <a href="/download/{{ filename }}">
-                <button class="download-btn">Télécharger</button>
+                <br><br><button class="download-btn">Télécharger</button>
             </a>
         </div>
         {% endif %}
