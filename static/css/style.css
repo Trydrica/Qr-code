@@ -1,0 +1,65 @@
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f3f5f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    padding: 12px 20px;
+    background: #0a7cff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #005fcc;
+}
+
+.qr-box {
+    margin-top: 25px;
+}
+
+.qr-box img {
+    margin-top: 10px;
+    width: 250px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.download-btn {
+    margin-top: 15px;
+}

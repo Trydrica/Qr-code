@@ -4,7 +4,6 @@ import os
 
 app = Flask(__name__)
 
-# Dossier où les QR codes seront enregistrés
 OUTPUT_FOLDER = "static/qrcodes"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
@@ -18,7 +17,7 @@ def generate():
     filename = request.form.get("filename")
 
     if not link:
-        return "Erreur : aucun lien fourni"
+        return render_template("index.html", error="Veuillez entrer un lien.")
 
     if not filename.endswith(".png"):
         filename += ".png"
@@ -29,15 +28,12 @@ def generate():
     img = qrcode.make(link)
     img.save(filepath)
 
-    return f"""
-    <h3>QR code généré avec succès !</h3>
-    <img src="/{filepath}" style="width:200px; border:1px solid #ccc;"><br><br>
-    <a href="/download/{filename}" download>
-        <button>Télécharger le fichier</button>
-    </a>
-    <br><br>
-    <a href="/">Retour</a>
-    """
+    return render_template(
+        "index.html",
+        link=link,
+        filename=filename,
+        qr_path=f"/static/qrcodes/{filename}"
+    )
 
 @app.route("/download/<filename>")
 def download(filename):

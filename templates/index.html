@@ -1,25 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Générateur de QR Code</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
+    <div class="container">
 
-<h2>Générer un QR Code</h2>
+        <h2>Générer un QR Code</h2>
 
-<form action="/generate" method="POST">
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
 
-    <label>Lien à convertir :</label><br>
-    <input type="text" name="link" placeholder="https://exemple.com" style="width:300px;" required>
-    <br><br>
+        <form action="/generate" method="POST">
 
-    <label>Nom du fichier (sans extension) :</label><br>
-    <input type="text" name="filename" placeholder="qrcode" required>
-    <br><br>
+            <label>Lien à convertir :</label><br>
+            <input type="text" name="link" placeholder="https://exemple.com" required>
 
-    <button type="submit">Générer le QR Code</button>
-</form>
+            <label>Nom du fichier :</label><br>
+            <input type="text" name="filename" placeholder="qrcode" required>
 
+            <button type="submit">Générer</button>
+        </form>
+
+        {% if qr_path %}
+        <div class="qr-box">
+            <h3>QR Code généré :</h3>
+            <img src="{{ qr_path }}" alt="QR Code">
+
+            <a href="/download/{{ filename }}">
+                <button class="download-btn">Télécharger</button>
+            </a>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
