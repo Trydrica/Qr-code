@@ -1,0 +1,36 @@
+# Environnement virtuel
+env/
+venv/
+.venv/
+
+# Caches Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Fichiers de logs
+*.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+.idea/
+
+# Sorties Python
+*.egg-info/
+dist/
+build/
+
+# Images générées par le script
+# Uncomment si tu veux exclure les QR codes générés
+# *.png
+# *.jpg
+# *.jpeg
+
+# Configurations
+*.env
+
